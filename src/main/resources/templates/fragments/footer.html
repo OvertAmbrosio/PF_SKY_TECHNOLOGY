@@ -1,0 +1,79 @@
+<footer xmlns:th="http://www.thymeleaf.org" th:fragment="footer" class="bg-dark text-white pt-5 pb-3 mt-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4 col-md-6 mb-4">
+                <h5 class="text-uppercase mb-3 fw-bold">Sky Technology.</h5>
+                <p class="text-white-50">
+                    Somos líderes en soluciones tecnológicas e informáticas. Ofrecemos productos y servicios de calidad
+                    para satisfacer las necesidades de nuestros clientes.
+                </p>
+                <div class="mt-3">
+                    <a href="#" class="text-white me-3" title="Facebook"><i class="fab fa-facebook-f fa-lg"></i></a>
+                    <a href="#" class="text-white me-3" title="Twitter"><i class="fab fa-twitter fa-lg"></i></a>
+                    <a href="#" class="text-white me-3" title="Instagram"><i class="fab fa-instagram fa-lg"></i></a>
+                    <a href="#" class="text-white" title="LinkedIn"><i class="fab fa-linkedin-in fa-lg"></i></a>
+                </div>
+            </div>
+
+            <div class="col-lg-2 col-md-6 mb-4">
+                <h5 class="text-uppercase mb-3 fw-bold">Enlaces</h5>
+                <ul class="list-unstyled">
+                    <li class="mb-2"><a th:href="@{/}" class="text-white-50 text-decoration-none">Inicio</a></li>
+                    <li class="mb-2"><a th:href="@{/productos}" class="text-white-50 text-decoration-none">Productos</a></li>
+                    <li class="mb-2"><a th:href="@{/nosotros}" class="text-white-50 text-decoration-none">Nosotros</a></li>
+                </ul>
+            </div>
+
+            <div class="col-lg-3 col-md-6 mb-4">
+                <h5 class="text-uppercase mb-3 fw-bold">Atención al Cliente</h5>
+                <ul class="list-unstyled">
+                    <li class="mb-2"><a th:href="@{/perfil}" class="text-white-50 text-decoration-none">Mi Cuenta</a></li>
+                    <li class="mb-2"><a th:href="@{/contacto}" class="text-white-50 text-decoration-none">Contacto</a></li>
+                </ul>
+            </div>
+
+            <div class="col-lg-3 col-md-6 mb-4">
+                <h5 class="text-uppercase mb-3 fw-bold">Contacto</h5>
+                <ul class="list-unstyled text-white-50">
+                    <li class="mb-2">
+                        <i class="fas fa-map-marker-alt me-2"></i>
+                        Av. Libertad , Pataz Peru
+                    </li>
+                    <li class="mb-2">
+                        <i class="fas fa-phone me-2"></i>
+                        +51 967061150
+                    </li>
+                    <li class="mb-2">
+                        <i class="fas fa-envelope me-2"></i>
+                        info@skytechnologyskytechnology.com
+                    </li>
+                    <li class="mb-2">
+                        <i class="fas fa-clock me-2"></i>
+                        Lun - Sáb: 9:00 AM - 8:00 PM
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <hr class="bg-white-50 my-4">
+
+        <div class="row align-items-center">
+            <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+                <div class="d-flex justify-content-center justify-content-md-start gap-2">
+                    <i class="fab fa-cc-visa fa-2x text-white-50"></i>
+                    <i class="fab fa-cc-mastercard fa-2x text-white-50"></i>
+                    <i class="fab fa-cc-amex fa-2x text-white-50"></i>
+                    <i class="fab fa-cc-paypal fa-2x text-white-50"></i>
+                </div>
+            </div>
+            <div class="col-md-6 text-center text-md-end">
+                <p class="mb-1">&copy; 2025 <strong>Sky Technology S.A.</strong> Todos los derechos reservados.</p>
+                <p class="small text-white-50 mb-0">
+                    Desarrollado por el equipo de Computación e Informática V Ciclo |
+                    <a href="#" class="text-white-50 text-decoration-none">Términos</a> |
+                    <a href="#" class="text-white-50 text-decoration-none">Privacidad</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>

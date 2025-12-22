@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Gestión de Usuarios | Admin</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" defer></script>
+</head>
+<body>
+
+<div th:replace="fragments/navbar-admin :: navbar-admin"></div>
+
+<main class="container mt-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="fw-bold"><i class="bi bi-people text-primary"></i> Gestión de Usuarios</h2>
+        <a th:href="@{/admin/usuarios/nuevo}" class="btn btn-primary">
+            <i class="bi bi-plus-circle"></i> Nuevo Usuario
+        </a>
+    </div>
+
+    <!-- Mensajes -->
+    <div th:if="${success}" class="alert alert-success alert-dismissible fade show">
+        <i class="bi bi-check-circle"></i> <span th:text="${success}"></span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+    <div th:if="${error}" class="alert alert-danger alert-dismissible fade show">
+        <i class="bi bi-exclamation-triangle"></i> <span th:text="${error}"></span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+
+    <!-- Tabla -->
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle">
+                    <thead class="table-light">
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Email</th>
+                        <th>Rol</th>
+                        <th>Estado</th>
+                        <th>Acciones</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="usuario : ${usuarios}">
+                        <td th:text="${usuario.id}"></td>
+                        <td th:text="${usuario.nombre}"></td>
+                        <td th:text="${usuario.email}"></td>
+                        <td>
+                            <span class="badge bg-secondary"
+                                  th:text="${#lists.isEmpty(usuario.roles) ? 'Sin rol' : usuario.roles.iterator().next().nombre}">
+                            </span>
+                        </td>
+                        <td>
+                            <span class="badge"
+                                  th:classappend="${usuario.enabled} ? 'bg-success' : 'bg-danger'"
+                                  th:text="${usuario.enabled ? 'Activo' : 'Inactivo'}">
+                            </span>
+                        </td>
+                        <td>
+                            <a th:href="@{/admin/usuarios/editar/{id}(id=${usuario.id})}"
+                               class="btn btn-sm btn-outline-primary">
+                                <i class="bi bi-pencil"></i>
+                            </a>
+                            <form th:action="@{/admin/usuarios/eliminar/{id}(id=${usuario.id})}"
+                                  method="post" style="display: inline;"
+                                  onsubmit="return confirm('¿Estás seguro de eliminar este usuario?');">
+                                <button type="submit" class="btn btn-sm btn-outline-danger">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </form>
+                            <form th:action="@{/admin/usuarios/toggle/{id}(id=${usuario.id})}"
+                                  method="post" style="display: inline;">
+                                <button type="submit"
+                                        th:classappend="${usuario.enabled} ? 'btn-outline-warning' : 'btn-outline-success'"
+                                        class="btn btn-sm">
+                                    <i th:classappend="${usuario.enabled} ? 'bi bi-x-circle' : 'bi bi-check-circle'"></i>
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</main>
+
+</body>
+</html>

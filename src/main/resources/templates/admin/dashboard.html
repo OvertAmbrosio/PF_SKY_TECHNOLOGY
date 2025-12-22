@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard Admin | Sky Technology</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" defer></script>
+    <style>
+        body {
+            background-color: #f8f9fa;
+            min-height: 100vh;
+        }
+        .stats-card {
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .stats-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+        }
+        .stats-icon {
+            font-size: 3rem;
+            opacity: 0.8;
+        }
+        .stats-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+
+<div th:replace="fragments/navbar-admin :: navbar-admin"></div>
+
+<main class="container mt-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="fw-bold">
+            <i class="bi bi-speedometer2 text-primary"></i> Dashboard Administrativo
+        </h2>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6 col-lg-3">
+            <div class="stats-card bg-primary text-white">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <p class="mb-0">Productos</p>
+                        <div class="stats-number" th:text="${totalProductos}">0</div>
+                        <a th:href="@{/admin/productos}" class="btn btn-light btn-sm mt-2">
+                            <i class="bi bi-box-seam"></i> Ver todos
+                        </a>
+                    </div>
+                    <i class="bi bi-box-seam stats-icon"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-lg-3">
+            <div class="stats-card bg-success text-white">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <p class="mb-0">Categorías</p>
+                        <div class="stats-number" th:text="${totalCategorias}">0</div>
+                        <a th:href="@{/admin/categorias}" class="btn btn-light btn-sm mt-2">
+                            <i class="bi bi-tags"></i> Ver todas
+                        </a>
+                    </div>
+                    <i class="bi bi-tags stats-icon"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-lg-3">
+            <div class="stats-card bg-warning text-white">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <p class="mb-0">Usuarios</p>
+                        <div class="stats-number" th:text="${totalUsuarios}">0</div>
+                        <a th:href="@{/admin/usuarios}" class="btn btn-light btn-sm mt-2">
+                            <i class="bi bi-people"></i> Ver todos
+                        </a>
+                    </div>
+                    <i class="bi bi-people stats-icon"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-lg-3">
+            <div class="stats-card bg-danger text-white">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <p class="mb-0">Órdenes</p>
+                        <div class="stats-number" th:text="${totalOrdenes}">0</div>
+                        <a th:href="@{/admin/ordenes}" class="btn btn-light btn-sm mt-2">
+                            <i class="bi bi-receipt"></i> Ver todas
+                        </a>
+                    </div>
+                    <i class="bi bi-receipt stats-icon"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-5">
+        <div class="col-12">
+            <h4 class="fw-bold mb-4"><i class="bi bi-lightning-charge text-warning"></i> Accesos Rápidos</h4>
+        </div>
+
+        <div class="col-md-6 col-lg-3 mb-3">
+            <a th:href="@{/admin/productos/nuevo}" class="btn btn-outline-primary w-100 p-3">
+                <i class="bi bi-plus-circle fs-3"></i>
+                <p class="mb-0 mt-2">Nuevo Producto</p>
+            </a>
+        </div>
+
+        <div class="col-md-6 col-lg-3 mb-3">
+            <a th:href="@{/admin/categorias/nueva}" class="btn btn-outline-success w-100 p-3">
+                <i class="bi bi-plus-circle fs-3"></i>
+                <p class="mb-0 mt-2">Nueva Categoría</p>
+            </a>
+        </div>
+
+        <div class="col-md-6 col-lg-3 mb-3">
+            <a th:href="@{/admin/usuarios/nuevo}" class="btn btn-outline-warning w-100 p-3">
+                <i class="bi bi-plus-circle fs-3"></i>
+                <p class="mb-0 mt-2">Nuevo Usuario</p>
+            </a>
+        </div>
+
+        <div class="col-md-6 col-lg-3 mb-3">
+            <a th:href="@{/admin/ordenes}" class="btn btn-outline-danger w-100 p-3">
+                <i class="bi bi-eye fs-3"></i>
+                <p class="mb-0 mt-2">Ver Órdenes</p>
+            </a>
+        </div>
+    </div>
+</main>
+
+</body>
+</html>

@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro | Sky Technology</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        .animated-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(-45deg, #11998e 0%, #38ef7d 25%, #00d2ff 50%, #3a7bd5 75%, #667eea 100%);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+            z-index: -2;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .geometric-shapes {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .shape {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.1);
+            animation: rotate 20s infinite linear;
+        }
+
+        .shape.circle {
+            border-radius: 50%;
+        }
+
+        .shape:nth-child(1) {
+            width: 200px;
+            height: 200px;
+            top: 10%;
+            left: 10%;
+            animation-duration: 25s;
+        }
+
+        .shape:nth-child(2) {
+            width: 150px;
+            height: 150px;
+            top: 60%;
+            right: 10%;
+            animation-duration: 20s;
+            animation-direction: reverse;
+        }
+
+        .shape:nth-child(3) {
+            width: 100px;
+            height: 100px;
+            bottom: 20%;
+            left: 20%;
+            animation-duration: 30s;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .register-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .register-card {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(20px);
+            border-radius: 30px;
+            padding: 45px 40px;
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            width: 100%;
+            max-width: 550px;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .logo-section {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .logo-circle {
+            width: 90px;
+            height: 90px;
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            box-shadow: 0 10px 30px rgba(17, 153, 142, 0.4);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .logo-circle i {
+            font-size: 42px;
+            color: white;
+        }
+
+        .brand-name {
+            font-size: 30px;
+            font-weight: 700;
+            color: white;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            margin-bottom: 5px;
+        }
+
+        .brand-tagline {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 13px;
+            letter-spacing: 1px;
+        }
+
+        .alert-custom {
+            background: rgba(255, 255, 255, 0.95);
+            border: none;
+            border-radius: 15px;
+            padding: 15px 20px;
+            margin-bottom: 25px;
+            animation: slideDown 0.5s ease-out;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .alert-custom.alert-danger {
+            color: #dc3545;
+            box-shadow: 0 4px 15px rgba(220, 53, 69, 0.2);
+        }
+
+        .form-label {
+            color: white;
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .form-control-custom {
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 15px;
+            padding: 13px 20px;
+            color: white;
+            font-size: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .form-control-custom::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .form-control-custom:focus {
+            background: rgba(255, 255, 255, 0.25);
+            border-color: rgba(255, 255, 255, 0.6);
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+            color: white;
+            outline: none;
+        }
+
+        .form-control-custom.is-invalid {
+            border-color: #ff6b6b;
+            animation: shake 0.5s;
+        }
+
+        .form-control-custom.is-valid {
+            border-color: #51cf66;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+
+        .invalid-feedback, .valid-feedback {
+            font-size: 12px;
+            margin-top: 5px;
+            font-weight: 500;
+        }
+
+        .invalid-feedback {
+            color: #ff6b6b;
+        }
+
+        .valid-feedback {
+            color: #51cf66;
+        }
+
+        .input-group-custom {
+            position: relative;
+        }
+
+        .input-icon {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 16px;
+            z-index: 10;
+            pointer-events: none;
+        }
+
+        .password-toggle {
+            cursor: pointer;
+            pointer-events: all;
+        }
+
+        .password-strength {
+            height: 5px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.2);
+            margin-top: 8px;
+            overflow: hidden;
+        }
+
+        .password-strength-bar {
+            height: 100%;
+            width: 0%;
+            transition: all 0.3s ease;
+            border-radius: 10px;
+        }
+
+        .strength-weak {
+            width: 33%;
+            background: linear-gradient(90deg, #ff6b6b, #ff8787);
+        }
+
+        .strength-medium {
+            width: 66%;
+            background: linear-gradient(90deg, #ffd43b, #fab005);
+        }
+
+        .strength-strong {
+            width: 100%;
+            background: linear-gradient(90deg, #51cf66, #37b24d);
+        }
+
+        .password-strength-text {
+            color: white;
+            font-size: 11px;
+            margin-top: 5px;
+            font-weight: 600;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .btn-register {
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            border: none;
+            border-radius: 15px;
+            padding: 15px;
+            font-size: 17px;
+            font-weight: 700;
+            color: white;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 20px rgba(17, 153, 142, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-register:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn-register:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(17, 153, 142, 0.6);
+        }
+
+        .btn-register:hover:before {
+            left: 100%;
+        }
+
+        .btn-register:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .link-custom {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border-bottom: 2px solid transparent;
+        }
+
+        .link-custom:hover {
+            color: #fff;
+            border-bottom-color: white;
+        }
+
+        .footer-text {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 14px;
+            text-align: center;
+            margin-top: 25px;
+        }
+
+        @media (max-width: 576px) {
+            .register-card {
+                padding: 35px 25px;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .brand-name {
+                font-size: 24px;
+            }
+
+            .logo-circle {
+                width: 70px;
+                height: 70px;
+            }
+
+            .logo-circle i {
+                font-size: 32px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+<div class="animated-background"></div>
+
+<div class="geometric-shapes">
+    <div class="shape circle"></div>
+    <div class="shape"></div>
+    <div class="shape circle"></div>
+</div>
+
+<div class="register-container">
+    <div class="register-card">
+        <div class="logo-section">
+            <div class="logo-circle">
+                <i class="bi bi-person-plus"></i>
+            </div>
+            <h1 class="brand-name">Sky Technology</h1>
+            <p class="brand-tagline">Únete a nuestra comunidad</p>
+        </div>
+
+        <div th:if="${error}" class="alert alert-danger alert-custom">
+            <i class="bi bi-exclamation-triangle me-2"></i>
+            <span th:text="${error}">Error al registrar</span>
+        </div>
+
+        <form th:action="@{/registro}" th:object="${usuario}" method="post" id="registerForm" novalidate>
+            <div class="form-row mb-3">
+                <div>
+                    <label for="nombre" class="form-label">
+                        <i class="bi bi-person me-1"></i>Nombre
+                    </label>
+                    <div class="input-group-custom">
+                        <input
+                                type="text"
+                                id="nombre"
+                                th:field="*{nombre}"
+                                class="form-control form-control-custom"
+                                placeholder="Juan"
+                                required
+                                minlength="2"
+                                pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+">
+                        <i class="bi bi-person input-icon"></i>
+                    </div>
+                    <div class="invalid-feedback">Mínimo 2 caracteres, solo letras</div>
+                    <div class="valid-feedback">✓ Válido</div>
+                </div>
+
+                <div>
+                    <label for="apellido" class="form-label">
+                        <i class="bi bi-person me-1"></i>Apellido
+                    </label>
+                    <div class="input-group-custom">
+                        <input
+                                type="text"
+                                id="apellido"
+                                th:field="*{apellido}"
+                                class="form-control form-control-custom"
+                                placeholder="Pérez"
+                                required
+                                minlength="2"
+                                pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+">
+                        <i class="bi bi-person input-icon"></i>
+                    </div>
+                    <div class="invalid-feedback">Mínimo 2 caracteres, solo letras</div>
+                    <div class="valid-feedback">✓ Válido</div>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="email" class="form-label">
+                    <i class="bi bi-envelope me-1"></i>Correo Electrónico
+                </label>
+                <div class="input-group-custom">
+                    <input
+                            type="email"
+                            id="email"
+                            th:field="*{email}"
+                            class="form-control form-control-custom"
+                            placeholder="ejemplo@skytechnology.com"
+                            required
+                            pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$">
+                    <i class="bi bi-envelope input-icon"></i>
+                </div>
+                <div class="invalid-feedback">Ingresa un correo válido</div>
+                <div class="valid-feedback">✓ Válido</div>
+            </div>
+
+            <div class="mb-3">
+                <label for="password" class="form-label">
+                    <i class="bi bi-key me-1"></i>Contraseña
+                </label>
+                <div class="input-group-custom">
+                    <input
+                            type="password"
+                            id="password"
+                            th:field="*{password}"
+                            class="form-control form-control-custom"
+                            placeholder="••••••••"
+                            required
+                            minlength="8">
+                    <i class="bi bi-eye-slash input-icon password-toggle" id="togglePassword"></i>
+                </div>
+                <div class="password-strength">
+                    <div class="password-strength-bar" id="strengthBar"></div>
+                </div>
+                <div class="password-strength-text" id="strengthText"></div>
+                <div class="invalid-feedback">Mínimo 8 caracteres, incluye mayúsculas, minúsculas y números</div>
+                <div class="valid-feedback">✓ Contraseña segura</div>
+            </div>
+
+            <div class="mb-4">
+                <label for="confirmPassword" class="form-label">
+                    <i class="bi bi-shield-check me-1"></i>Confirmar Contraseña
+                </label>
+                <div class="input-group-custom">
+                    <input
+                            type="password"
+                            id="confirmPassword"
+                            th:field="*{confirmPassword}"
+                            class="form-control form-control-custom"
+                            placeholder="••••••••"
+                            required>
+                    <i class="bi bi-eye-slash input-icon password-toggle" id="toggleConfirmPassword"></i>
+                </div>
+                <div class="invalid-feedback">Las contraseñas no coinciden</div>
+                <div class="valid-feedback">✓ Las contraseñas coinciden</div>
+            </div>
+
+            <div class="d-grid mb-3">
+                <button type="submit" class="btn btn-register" id="submitBtn">
+                    <i class="bi bi-person-plus me-2"></i>Crear Cuenta
+                </button>
+            </div>
+        </form>
+
+        <!-- Footer -->
+        <div class="footer-text">
+            ¿Ya tienes cuenta? <a href="/login" class="link-custom">Inicia sesión</a>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    (function() {
+        'use strict';
+
+        const form = document.getElementById('registerForm');
+        const nombre = document.getElementById('nombre');
+        const apellido = document.getElementById('apellido');
+        const email = document.getElementById('email');
+        const password = document.getElementById('password');
+        const confirmPassword = document.getElementById('confirmPassword');
+        const submitBtn = document.getElementById('submitBtn');
+        const strengthBar = document.getElementById('strengthBar');
+        const strengthText = document.getElementById('strengthText');
+
+        document.getElementById('togglePassword').addEventListener('click', function() {
+            const type = password.type === 'password' ? 'text' : 'password';
+            password.type = type;
+            this.classList.toggle('bi-eye');
+            this.classList.toggle('bi-eye-slash');
+        });
+
+        document.getElementById('toggleConfirmPassword').addEventListener('click', function() {
+            const type = confirmPassword.type === 'password' ? 'text' : 'password';
+            confirmPassword.type = type;
+            this.classList.toggle('bi-eye');
+            this.classList.toggle('bi-eye-slash');
+        });
+
+        function validateField(field, validationFn) {
+            field.addEventListener('input', function() {
+                if (validationFn(this.value)) {
+                    this.classList.remove('is-invalid');
+                    this.classList.add('is-valid');
+                } else {
+                    this.classList.remove('is-valid');
+                    if (this.value.length > 0) {
+                        this.classList.add('is-invalid');
+                    }
+                }
+            });
+
+            field.addEventListener('blur', function() {
+                if (this.value.length > 0 && !validationFn(this.value)) {
+                    this.classList.add('is-invalid');
+                }
+            });
+        }
+
+        validateField(nombre, val => val.length >= 2 && /^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$/.test(val));
+        validateField(apellido, val => val.length >= 2 && /^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$/.test(val));
+        validateField(email, val => /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/i.test(val));
+
+        password.addEventListener('input', function() {
+            const val = this.value;
+            let strength = 0;
+
+            if (val.length >= 8) strength++;
+            if (val.match(/[a-z]/)) strength++;
+            if (val.match(/[A-Z]/)) strength++;
+            if (val.match(/[0-9]/)) strength++;
+            if (val.match(/[^a-zA-Z0-9]/)) strength++;
+
+            strengthBar.className = 'password-strength-bar';
+
+            if (strength <= 2) {
+                strengthBar.classList.add('strength-weak');
+                strengthText.textContent = '⚠️ Contraseña débil';
+                strengthText.style.color = '#ff6b6b';
+            } else if (strength <= 4) {
+                strengthBar.classList.add('strength-medium');
+                strengthText.textContent = '⚡ Contraseña media';
+                strengthText.style.color = '#ffd43b';
+            } else {
+                strengthBar.classList.add('strength-strong');
+                strengthText.textContent = '✓ Contraseña fuerte';
+                strengthText.style.color = '#51cf66';
+            }
+
+            const isValid = val.length >= 8 &&
+                val.match(/[a-z]/) &&
+                val.match(/[A-Z]/) &&
+                val.match(/[0-9]/);
+
+            if (isValid) {
+                password.classList.remove('is-invalid');
+                password.classList.add('is-valid');
+            } else if (val.length > 0) {
+                password.classList.remove('is-valid');
+                password.classList.add('is-invalid');
+            }
+
+            if (confirmPassword.value) {
+                validateConfirmPassword();
+            }
+        });
+
+        function validateConfirmPassword() {
+            if (confirmPassword.value === password.value && confirmPassword.value.length >= 8) {
+                confirmPassword.classList.remove('is-invalid');
+                confirmPassword.classList.add('is-valid');
+                return true;
+            } else {
+                confirmPassword.classList.remove('is-valid');
+                if (confirmPassword.value.length > 0) {
+                    confirmPassword.classList.add('is-invalid');
+                }
+                return false;
+            }
+        }
+
+        confirmPassword.addEventListener('input', validateConfirmPassword);
+        confirmPassword.addEventListener('blur', validateConfirmPassword);
+
+        form.addEventListener('submit', function(event) {
+            let isValid = true;
+
+            if (!nombre.value.match(/^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$/) || nombre.value.length < 2) {
+                nombre.classList.add('is-invalid');
+                isValid = false;
+            }
+
+            if (!apellido.value.match(/^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$/) || apellido.value.length < 2) {
+                apellido.classList.add('is-invalid');
+                isValid = false;
+            }
+
+            if (!email.value.match(/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/i)) {
+                email.classList.add('is-invalid');
+                isValid = false;
+            }
+
+            const passwordValid = password.value.length >= 8 &&
+                password.value.match(/[a-z]/) &&
+                password.value.match(/[A-Z]/) &&
+                password.value.match(/[0-9]/);
+
+            if (!passwordValid) {
+                password.classList.add('is-invalid');
+                isValid = false;
+            }
+
+            if (confirmPassword.value !== password.value) {
+                confirmPassword.classList.add('is-invalid');
+                isValid = false;
+            }
+
+            if (!isValid) {
+                event.preventDefault();
+                event.stopPropagation();
+
+                const firstInvalid = form.querySelector('.is-invalid');
+                if (firstInvalid) {
+                    firstInvalid.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    firstInvalid.focus();
+                }
+            } else {
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = '<i class="bi bi-hourglass-split me-2"></i>Registrando...';
+            }
+        });
+
+        [nombre, apellido, email, password, confirmPassword].forEach(field => {
+            field.addEventListener('focus', function() {
+                this.classList.remove('is-invalid');
+            });
+        });
+    })();
+</script>
+</body>
+</html>

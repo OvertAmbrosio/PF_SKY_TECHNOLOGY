@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${categoria.id != null ? 'Editar Categoría' : 'Nueva Categoría'}"></title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+</head>
+<body>
+
+<div th:replace="fragments/navbar-admin :: navbar-admin"></div>
+
+<main class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0">
+                        <i class="bi bi-tags"></i>
+                        <span th:text="${categoria.id != null ? 'Editar Categoría' : 'Nueva Categoría'}"></span>
+                    </h4>
+                </div>
+                <div class="card-body">
+                    <form th:action="@{/admin/categorias/guardar}" th:object="${categoria}" method="post">
+                        <input type="hidden" th:field="*{id}">
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Nombre</label>
+                            <input type="text" class="form-control" th:field="*{nombre}" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Descripción</label>
+                            <textarea class="form-control" th:field="*{descripcion}" rows="3"></textarea>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Estado</label>
+                            <select class="form-select" th:field="*{activo}">
+                                <option th:value="true">Activo</option>
+                                <option th:value="false">Inactivo</option>
+                            </select>
+                        </div>
+
+                        <div class="d-flex justify-content-between">
+                            <a th:href="@{/admin/categorias}" class="btn btn-secondary">
+                                <i class="bi bi-arrow-left"></i> Cancelar
+                            </a>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="bi bi-save"></i> Guardar
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+</body>
+</html>
