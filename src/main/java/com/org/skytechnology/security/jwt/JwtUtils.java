@@ -9,7 +9,11 @@ import java.util.Date;
 
 @Component
 public class JwtUtils {
-    private final Key key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
+    // Clave secreta fija para desarrollo (en producción debería ir en
+    // application.properties)
+    private static final String SECRET_KEY_STRING = "MySuperSecretKeyForJwtSigningThatIsLongEnoughToMeetRequirements123";
+    private final Key key = Keys.hmacShaKeyFor(SECRET_KEY_STRING.getBytes());
+
     private final int jwtExpirationMs = 86400000;
 
     public String generateJwtToken(String email) {

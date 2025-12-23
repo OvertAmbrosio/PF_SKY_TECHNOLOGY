@@ -19,7 +19,7 @@ public class CarritoServiceImpl implements CarritoService {
     private final ItemCarritoRepository itemCarritoRepository;
 
     @Override
-    @Transactional(readOnly = true)
+    @Transactional
     public Carrito obtenerOCrearCarrito(Usuario usuario) {
         return carritoRepository.findByUsuarioWithItems(usuario)
                 .orElseGet(() -> {
@@ -42,21 +42,20 @@ public class CarritoServiceImpl implements CarritoService {
 
         itemCarritoRepository.findByCarritoAndProducto(carrito, producto)
                 .ifPresentOrElse(
-                    item -> {
-                        item.setCantidad(item.getCantidad() + cantidad);
-                        item.setPrecio(item.getCantidad() * producto.getPrecio());
-                        itemCarritoRepository.save(item);
-                    },
-                    () -> {
-                        ItemCarrito nuevoItem = ItemCarrito.builder()
-                                .carrito(carrito)
-                                .producto(producto)
-                                .cantidad(cantidad)
-                                .precio(producto.getPrecio() * cantidad)
-                                .build();
-                        itemCarritoRepository.save(nuevoItem);
-                    }
-                );
+                        item -> {
+                            item.setCantidad(item.getCantidad() + cantidad);
+                            item.setPrecio(item.getCantidad() * producto.getPrecio());
+                            itemCarritoRepository.save(item);
+                        },
+                        () -> {
+                            ItemCarrito nuevoItem = ItemCarrito.builder()
+                                    .carrito(carrito)
+                                    .producto(producto)
+                                    .cantidad(cantidad)
+                                    .precio(producto.getPrecio() * cantidad)
+                                    .build();
+                            itemCarritoRepository.save(nuevoItem);
+                        });
 
         recalcularTotal(carrito);
         return refrescarCarrito(carrito.getId());
@@ -64,7 +63,8 @@ public class CarritoServiceImpl implements CarritoService {
 
     @Override
     public Carrito actualizarCantidad(Usuario usuario, Long idItem, int cantidad) {
-        if (cantidad < 1) throw new RuntimeException("La cantidad mínima es 1");
+        if (cantidad < 1)
+            throw new RuntimeException("La cantidad mínima es 1");
 
         ItemCarrito item = itemCarritoRepository.findById(idItem)
                 .orElseThrow(() -> new RuntimeException("Item no encontrado"));
@@ -110,7 +110,7 @@ public class CarritoServiceImpl implements CarritoService {
     @Override
     public void limpiarCarrito(Carrito carrito) {
         itemCarritoRepository.deleteByCarritoId(carrito.getId());
-        
+
         carrito.setTotal(0.0);
         if (carrito.getItems() != null) {
             carrito.getItems().clear();

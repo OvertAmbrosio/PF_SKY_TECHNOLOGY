@@ -23,14 +23,15 @@ public class Carrito {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "usuario_id")
-    @JsonIgnoreProperties({"roles", "password", "enabled", "username", "authorities"}) 
+    @JsonIgnoreProperties({ "roles", "password", "enabled", "username", "authorities", "hibernateLazyInitializer",
+            "handler" })
     private Usuario usuario;
 
     @OneToMany(mappedBy = "carrito", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     @Builder.Default
     @JsonIgnoreProperties("carrito")
     private List<ItemCarrito> items = new ArrayList<>();
-    
+
     public void calcularTotal() {
         if (items == null) {
             this.total = 0.0;

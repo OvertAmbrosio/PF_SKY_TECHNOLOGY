@@ -21,18 +21,18 @@ public class ItemCarrito {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "producto_id")
-    @JsonIgnoreProperties({"categoria", "activo", "descripcion"})
+    @JsonIgnoreProperties({ "categoria", "activo", "descripcion", "hibernateLazyInitializer", "handler" })
     private Producto producto;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "carrito_id")
-    @JsonIgnoreProperties("items")
+    @JsonIgnoreProperties({ "items", "hibernateLazyInitializer", "handler" })
     private Carrito carrito;
-    
+
     public double getSubtotal() {
         return precio * cantidad;
     }
-    
+
     public void actualizarPrecio() {
         if (this.producto != null) {
             this.precio = this.producto.getPrecio();

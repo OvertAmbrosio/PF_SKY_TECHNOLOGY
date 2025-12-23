@@ -1,4 +1,5 @@
 package com.org.skytechnology.controllers;
+
 import com.org.skytechnology.entity.*;
 import com.org.skytechnology.enums.EstadoPago;
 import com.org.skytechnology.repositories.RolRepository;
@@ -12,8 +13,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
-
-
 
 @RestController
 @RequestMapping("/api/admin")
@@ -70,6 +69,11 @@ public class AdminController {
         return ResponseEntity.ok(categoriaService.listarTodas());
     }
 
+    @GetMapping("/categorias/{id}")
+    public ResponseEntity<Categoria> obtenerCategoria(@PathVariable Long id) {
+        return ResponseEntity.ok(categoriaService.obtenerPorId(id));
+    }
+
     @PostMapping("/categorias")
     public ResponseEntity<Categoria> guardarCategoria(@RequestBody Categoria categoria) {
         return new ResponseEntity<>(categoriaService.guardar(categoria), HttpStatus.CREATED);
@@ -89,8 +93,8 @@ public class AdminController {
     @PostMapping("/usuarios")
     public ResponseEntity<?> guardarUsuario(@RequestBody Map<String, Object> payload) {
         try {
-            Usuario usuario = new Usuario(); 
-            
+            Usuario usuario = new Usuario();
+
             String passwordNueva = (String) payload.get("passwordNueva");
             Long rolId = Long.valueOf(payload.get("rolId").toString());
 

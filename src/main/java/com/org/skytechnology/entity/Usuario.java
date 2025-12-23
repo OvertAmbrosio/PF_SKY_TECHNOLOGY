@@ -34,15 +34,13 @@ public class Usuario {
     private boolean enabled = true;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "usuario_roles",
-            joinColumns = @JoinColumn(name = "usuario_id"),
-            inverseJoinColumns = @JoinColumn(name = "rol_id"))
+    @JoinTable(name = "usuario_roles", joinColumns = @JoinColumn(name = "usuario_id"), inverseJoinColumns = @JoinColumn(name = "rol_id"))
     @JsonIgnoreProperties("usuarios")
     @Builder.Default
     private Set<Rol> roles = new HashSet<>();
 
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JsonIgnoreProperties("usuario")
+    @JsonIgnore
     @Builder.Default
     private List<Orden> ordenes = new ArrayList<>();
 }

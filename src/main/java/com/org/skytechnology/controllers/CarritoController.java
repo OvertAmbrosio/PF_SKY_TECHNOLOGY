@@ -30,6 +30,8 @@ public class CarritoController {
 
     @GetMapping
     public ResponseEntity<Carrito> verCarrito(@AuthenticationPrincipal CustomUserDetails userDetails) {
+        System.out.println(
+                "API /api/carrito reached. User: " + (userDetails != null ? userDetails.getUsername() : "null"));
 
         Carrito carrito = carritoService.obtenerOCrearCarrito(userDetails.getUsuario());
         carrito = carritoService.refrescarCarrito(carrito.getId());
@@ -38,11 +40,11 @@ public class CarritoController {
 
     @PostMapping("/items")
     public ResponseEntity<?> agregarAlCarrito(@RequestBody Map<String, Integer> request,
-                                               @AuthenticationPrincipal CustomUserDetails userDetails) {
+            @AuthenticationPrincipal CustomUserDetails userDetails) {
         try {
             Long idProducto = Long.valueOf(request.get("idProducto"));
             int cantidad = request.getOrDefault("cantidad", 1);
-            
+
             carritoService.agregarProducto(userDetails.getUsuario(), idProducto, cantidad);
             return ResponseEntity.status(HttpStatus.CREATED).body("Producto agregado al carrito");
         } catch (Exception e) {
@@ -52,17 +54,17 @@ public class CarritoController {
 
     @PatchMapping("/items/{idItem}")
     public ResponseEntity<?> actualizarCantidad(@PathVariable Long idItem,
-                                                 @RequestBody Map<String, Integer> request,
-                                                 @AuthenticationPrincipal CustomUserDetails userDetails) {
+            @RequestBody Map<String, Integer> request,
+            @AuthenticationPrincipal CustomUserDetails userDetails) {
         try {
             int cantidad = request.get("cantidad");
             carritoService.actualizarCantidad(userDetails.getUsuario(), idItem, cantidad);
-            
+
             Carrito carrito = carritoService.obtenerOCrearCarrito(userDetails.getUsuario());
             Map<String, Object> response = new HashMap<>();
             response.put("success", true);
             response.put("nuevoTotal", carrito.getTotal());
-            
+
             return ResponseEntity.ok(response);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
@@ -71,7 +73,7 @@ public class CarritoController {
 
     @DeleteMapping("/items/{idItem}")
     public ResponseEntity<Void> eliminarDelCarrito(@PathVariable Long idItem,
-                                                    @AuthenticationPrincipal CustomUserDetails userDetails) {
+            @AuthenticationPrincipal CustomUserDetails userDetails) {
         carritoService.eliminarItem(userDetails.getUsuario(), idItem);
         return ResponseEntity.noContent().build();
     }
@@ -87,7 +89,7 @@ public class CarritoController {
             }
 
             Orden orden = ordenService.crearOrdenDesdeCarrito(carrito, usuario);
-            
+
             return ResponseEntity.status(HttpStatus.CREATED).body(orden);
 
         } catch (Exception e) {
@@ -98,7 +100,7 @@ public class CarritoController {
 
     @GetMapping("/boleta/{ordenId}")
     public ResponseEntity<InputStreamResource> descargarBoleta(@PathVariable Long ordenId,
-                                                               @AuthenticationPrincipal CustomUserDetails userDetails) {
+            @AuthenticationPrincipal CustomUserDetails userDetails) {
         try {
             Orden orden = ordenService.obtenerPorId(ordenId);
 
